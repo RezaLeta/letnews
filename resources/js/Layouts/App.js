@@ -1,12 +1,25 @@
+import Alert from "@/Components/Alert";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import { Head, Link, usePage } from "@inertiajs/inertia-react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import React, { useState } from "react";
 
 export default function App({ children, title }) {
-    const { auth } = usePage().props;
-
+    const { auth, flash } = usePage().props;
     const [tutup, setTutup] = useState(false);
+
+    flash.message &&
+        toast.success(flash.message, {
+            position: "top-center",
+            autoClose: 5000,
+
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+        });
 
     return (
         <div className="block bg-gray-200 min-h-screen">
@@ -120,6 +133,11 @@ export default function App({ children, title }) {
                         </div>
                     </div>
                 </div>
+
+                <div>
+                    <ToastContainer />
+                </div>
+
                 <main className=" px-5 py-4">{children}</main>
             </div>
         </div>

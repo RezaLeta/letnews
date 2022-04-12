@@ -58,7 +58,7 @@ export default function Post(props) {
                                   return (
                                       <tr key={post.id} className="">
                                           <td className="px-6 py-2 text-center ">
-                                              {post.user_id}
+                                              {post.user.name}
                                           </td>
                                           <td className="px-6 py-2 ">
                                               {post.title.length > 25
