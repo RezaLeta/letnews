@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from "react";
 
 export default function Input({
-    type = 'text',
+    type = "text",
     name,
     value,
     className,
@@ -9,6 +9,7 @@ export default function Input({
     required,
     isFocused,
     handleChange,
+    placeHolder,
 }) {
     const input = useRef();
 
@@ -21,6 +22,7 @@ export default function Input({
     return (
         <div className="flex flex-col items-start">
             <input
+                placeholder={placeHolder}
                 type={type}
                 name={name}
                 value={value}

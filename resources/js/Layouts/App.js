@@ -1,3 +1,4 @@
+import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import { Head, Link, usePage } from "@inertiajs/inertia-react";
 import React, { useState } from "react";
@@ -10,10 +11,10 @@ export default function App({ children, title }) {
     return (
         <div className="block bg-gray-200 min-h-screen">
             <Head title={title} />
-            <div className="m-0 p-0 overflow-auto   md:w-52 w-full h-auto relative    bg-purple-800 md:fixed md:h-full ">
+            <div className="m-0 p-0 overflow-auto   md:w-52 w-full h-auto relative    bg-blue-600 md:fixed md:h-full ">
                 <div className="bg-gray-700  shadow-md flex items-center justify-between px-5 md:items-center md:justify-center h-16 w-full">
                     <div className="text-2xl text-shadow text-white font-bold">
-                        Letak News
+                        LET NEWS
                     </div>
                     <div className="block md:hidden">
                         <button
@@ -60,7 +61,7 @@ export default function App({ children, title }) {
                             href={route("dashboard")}
                             active={route().current("dashboard")}
                         >
-                            Dashboard
+                            <p className="text-xl font-bold">Dashboard</p>
                         </NavLink>
                     </div>
                     <div className=" flex   px-5  md:px-10 pt-2  flex-col">
@@ -68,7 +69,7 @@ export default function App({ children, title }) {
                             href={route("post.page")}
                             active={route().current("post.page")}
                         >
-                            Post
+                            <p className="text-xl font-bold">POST</p>
                         </NavLink>
                     </div>
                 </div>
@@ -77,9 +78,46 @@ export default function App({ children, title }) {
                 <div className="bg-white h-auto">
                     <div className="flex justify-between px-5 md:px-10 py-5">
                         <p>Letak Group</p>
-                        <p className="text-md text-blue-400 font-bold">
-                            {auth.user.email}
-                        </p>
+
+                        <div className=" sm:items-center md:ml-6">
+                            <div className="ml-3 relative">
+                                <Dropdown>
+                                    <Dropdown.Trigger>
+                                        <span className="inline-flex rounded-md">
+                                            <button
+                                                type="button"
+                                                className="inline-flex items-center px-3  border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                            >
+                                                {auth.user.name}
+
+                                                <svg
+                                                    className="ml-2 -mr-0.5 h-4 w-4"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 20 20"
+                                                    fill="currentColor"
+                                                >
+                                                    <path
+                                                        fillRule="evenodd"
+                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                        clipRule="evenodd"
+                                                    />
+                                                </svg>
+                                            </button>
+                                        </span>
+                                    </Dropdown.Trigger>
+
+                                    <Dropdown.Content>
+                                        <Dropdown.Link
+                                            href={route("logout")}
+                                            method="post"
+                                            as="button"
+                                        >
+                                            Log Out
+                                        </Dropdown.Link>
+                                    </Dropdown.Content>
+                                </Dropdown>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <main className=" px-5 py-4">{children}</main>
