@@ -37,6 +37,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/post', [PostController::class, 'index'])->name('post.page');
     Route::get('post/create', [PostController::class, 'create'])->name('post.create');
     Route::post('post/create', [PostController::class, 'store'])->name('post.store');
+    Route::get("/post/{post:slug}/detail_post", [PostController::class, 'detail_post'])->name('post.detail');
+    Route::post('/post/{post:slug}/detail_post', [PostController::class, 'update'])->name('post.update');
+    Route::delete('/post/{post:id}', [PostController::class, 'destroy'])->name('post.delete');
 });
 
 require __DIR__ . '/auth.php';

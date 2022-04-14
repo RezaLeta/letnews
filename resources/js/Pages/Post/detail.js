@@ -1,27 +1,26 @@
 import Input from "@/Components/Input";
 import Label from "@/Components/Label";
 import App from "@/Layouts/App";
-import { useForm } from "@inertiajs/inertia-react";
-import { Link } from "@inertiajs/inertia-react";
-import React, { useState } from "react";
+import { Link, useForm } from "@inertiajs/inertia-react";
+import React from "react";
 
-export default function Create() {
-    const { data, setData, post, processing, errors } = useForm({
-        title: "",
-        body: "",
-        date_post: "",
+export default function Detail({ dpost }) {
+    const { data, setData, post, errors } = useForm({
+        title: dpost.title,
+        body: dpost.body,
+        date_post: dpost.date_post,
     });
 
-    function sendNewPost(e) {
+    function eventOnSubmit(e) {
         e.preventDefault();
-        post(route("post.store"));
+        post(route("post.update", dpost.slug));
     }
 
     return (
         <div className="bg-white h-full rounded-lg shadow-lg px-6 py-4">
             <div className="flex justify-between mb-10 border-b border-bg_abu_tua-200">
                 <p className="text-2xl font-bold text-bg_biru_tua">
-                    Create NEW POST
+                    Detail POST
                 </p>
 
                 <div>
@@ -45,7 +44,7 @@ export default function Create() {
                 </div>
             </div>
             <div>
-                <form onSubmit={sendNewPost}>
+                <form onSubmit={eventOnSubmit}>
                     <div className="mb-3">
                         <Label value="Title POST" className=" text-gray-400" />
                         <Input
@@ -101,7 +100,7 @@ export default function Create() {
                         )}
                     </div>
                     <button className="bg-bg_abu_tua-200 hover:bg-bg_abu_tua-100 text-white focus:outline-none rounded-lg block px-4 py-2 w-full">
-                        Save New POST
+                        UPDATE NEW POST
                     </button>
                 </form>
             </div>
@@ -109,4 +108,4 @@ export default function Create() {
     );
 }
 
-Create.layout = (page) => <App children={page} title="Create POST" />;
+Detail.layout = (page) => <App children={page} title={`Detail Post`} />;

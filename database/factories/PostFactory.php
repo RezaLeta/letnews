@@ -3,8 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
@@ -20,7 +21,8 @@ class PostFactory extends Factory
     {
         return [
             'user_id' => $this->faker->randomElement([1, 2]),
-            'title' => $this->faker->jobTitle(),
+            'title' => $title = $this->faker->jobTitle(),
+            'slug' => Str::slug($title) . '-' . Str::random(5),
             'body' => $this->faker->text(),
             'date_post' => $this->faker->dateTimeBetween('2020-01-01', '2022-01-01')
         ];

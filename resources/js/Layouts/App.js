@@ -13,18 +13,12 @@ export default function App({ children, title }) {
     flash.message &&
         toast.success(flash.message, {
             position: "top-center",
-            autoClose: 5000,
-
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
         });
 
     return (
-        <div className="block bg-gray-200 min-h-screen">
+        <div className="block bg-bg_abu min-h-screen">
             <Head title={title} />
-            <div className="m-0 p-0 overflow-auto   md:w-52 w-full h-auto relative    bg-blue-600 md:fixed md:h-full ">
+            <div className="m-0 p-0 overflow-auto   md:w-52 w-full h-auto relative  bg-bg_biru_tua md:fixed md:h-full ">
                 <div className="bg-gray-700  shadow-md flex items-center justify-between px-5 md:items-center md:justify-center h-16 w-full">
                     <div className="text-2xl text-shadow text-white font-bold">
                         LET NEWS
@@ -69,20 +63,48 @@ export default function App({ children, title }) {
                     </div>
                 </div>
                 <div className={`${tutup == false ? "hidden" : ""} md:block`}>
-                    <div className=" flex   px-5  md:px-10 pt-4  flex-col">
+                    <div className=" flex   px-5  md:px-4 pt-4  flex-col">
                         <NavLink
                             href={route("dashboard")}
                             active={route().current("dashboard")}
                         >
-                            <p className="text-xl font-bold">Dashboard</p>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-6 w-6"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                strokeWidth={2}
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+                                />
+                            </svg>
+                            <p className=" ml-2 font-bold">Dashboard</p>
                         </NavLink>
                     </div>
-                    <div className=" flex   px-5  md:px-10 pt-2  flex-col">
+                    <div className=" flex   px-5  md:px-4 pt-2  flex-col">
                         <NavLink
                             href={route("post.page")}
                             active={route().current("post.page")}
                         >
-                            <p className="text-xl font-bold">POST</p>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-6 w-6"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                strokeWidth={2}
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
+                                />
+                            </svg>
+                            <p className="ml-2 font-bold">POST</p>
                         </NavLink>
                     </div>
                 </div>
