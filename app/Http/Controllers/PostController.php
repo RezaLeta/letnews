@@ -50,7 +50,7 @@ class PostController extends Controller
     public function detail_post(Post $post)
     {
         return Inertia::render('Post/detail', [
-            'allImages' => Image::where('post_id' , $post['id'])->get(),
+            'allImages' => Image::where('post_id', $post['id'])->get(),
             'dpost' => $post
         ]);
     }
@@ -90,13 +90,13 @@ class PostController extends Controller
     public function upload_image(Request $request)
     {
         $id = $request->input('post_id');
-        $slug= $request->input('slug');
+        $slug = $request->input('slug');
         $random = Str::random(6);
         $thumbnail = $request->file('image');
-    //    dd($thumbnail);
+        //    dd($thumbnail);
         $allimg = [];
         foreach ($thumbnail as $poto) {
-            foreach($poto as $fix) {
+            foreach ($poto as $fix) {
                 $name_image = $random . '-' . date('d-m-Y') . "-{$fix->getClientOriginalName()}";
                 $fix->storeAs('post_image', $name_image);
                 Image::create([
@@ -106,9 +106,9 @@ class PostController extends Controller
                 ]);
             }
         }
-       
-        return redirect()->route('post.detail', $slug)->with('message','Foto berhasil di upload');
-      
+
+        return redirect()->route('post.detail', $slug)->with('message', 'Foto berhasil di upload');
+
 
         // $thumbnailUrl = $thumbnail->storeAs('post_image', "{$id}.{$thumbnail->extension()}");
     }

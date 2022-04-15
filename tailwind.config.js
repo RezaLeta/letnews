@@ -10,6 +10,10 @@ module.exports = {
 
     theme: {
         extend: {
+            height : {
+                '98' : '396px',
+                '110' : '500px'
+            },
             colors: {
                 transparent: "transparent",
                 white: "#fff",
