@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use App\Models\Post;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
@@ -13,10 +14,11 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('user')->latest()->paginate(5);
+        $posts = Post::query();
 
         return inertia('Post/index', [
-            'posts' => $posts
+            'posts' => $posts->with('user')->latest()->paginate(5),
+            'total' =>  $posts->count()
         ]);
     }
 
@@ -48,6 +50,7 @@ class PostController extends Controller
     public function detail_post(Post $post)
     {
         return Inertia::render('Post/detail', [
+            'allImages' => Image::where('post_id' , $post['id'])->get(),
             'dpost' => $post
         ]);
     }
@@ -82,5 +85,31 @@ class PostController extends Controller
         $post->delete();
         return redirect()->route('post.page')->with('message', 'Data berhasil dihapus');
         // }
+    }
+
+    public function upload_image(Request $request)
+    {
+        $id = $request->input('post_id');
+        $slug= $request->input('slug');
+        $random = Str::random(6);
+        $thumbnail = $request->file('image');
+    //    dd($thumbnail);
+        $allimg = [];
+        foreach ($thumbnail as $poto) {
+            foreach($poto as $fix) {
+                $name_image = $random . '-' . date('d-m-Y') . "-{$fix->getClientOriginalName()}";
+                $fix->storeAs('post_image', $name_image);
+                Image::create([
+                    'post_id' => $id,
+                    'url' => $name_image,
+                    'date' => date('Y-m-d')
+                ]);
+            }
+        }
+       
+        return redirect()->route('post.detail', $slug)->with('message','Foto berhasil di upload');
+      
+
+        // $thumbnailUrl = $thumbnail->storeAs('post_image', "{$id}.{$thumbnail->extension()}");
     }
 }

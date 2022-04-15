@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, Head } from "@inertiajs/inertia-react";
 
 export default function Welcome(props) {
+    const [data, setData] = useState("hello");
     return (
         <>
             <Head title="Welcome" />

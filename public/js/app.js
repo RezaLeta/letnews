@@ -6771,10 +6771,10 @@ Dashboard.layout = function (page) {
 
 /***/ }),
 
-/***/ "./resources/js/Pages/Post/create.js":
-/*!*******************************************!*\
-  !*** ./resources/js/Pages/Post/create.js ***!
-  \*******************************************/
+/***/ "./resources/js/Pages/Post/create.jsx":
+/*!********************************************!*\
+  !*** ./resources/js/Pages/Post/create.jsx ***!
+  \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -6932,6 +6932,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @inertiajs/inertia-react */ "./node_modules/@inertiajs/inertia-react/dist/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -6940,27 +6952,76 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function Detail(_ref) {
-  var dpost = _ref.dpost;
+  var dpost = _ref.dpost,
+      allImages = _ref.allImages;
 
   var _useForm = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_3__.useForm)({
+    post_id: dpost.id,
+    slug: dpost.slug,
     title: dpost.title,
     body: dpost.body,
-    date_post: dpost.date_post
+    date_post: dpost.date_post,
+    image: []
   }),
       data = _useForm.data,
       setData = _useForm.setData,
       post = _useForm.post,
-      errors = _useForm.errors;
+      errors = _useForm.errors,
+      processing = _useForm.processing;
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_4__.useState)("oke"),
+      _useState2 = _slicedToArray(_useState, 2),
+      datas = _useState2[0],
+      setDatas = _useState2[1];
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_4__.useState)([]),
+      _useState4 = _slicedToArray(_useState3, 2),
+      selectedImage = _useState4[0],
+      setSelectedImage = _useState4[1];
+
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_4__.useState)([]),
+      _useState6 = _slicedToArray(_useState5, 2),
+      images = _useState6[0],
+      setImages = _useState6[1];
+
+  var handleImage = function handleImage(e) {
+    if (e.target.files) {
+      var files = Array.from(e.target.files).map(function (file) {
+        return URL.createObjectURL(file);
+      });
+      setSelectedImage(function (prevImages) {
+        return prevImages.concat(files);
+      }); // setData("image", e.target.files );
+
+      images.push(e.target.files);
+      console.log(images);
+      setData('image', images); // Array.from(e.target.files).map((file) => URL.revokeObjectURL(file));
+    }
+  };
+
+  var tampilanFoto = function tampilanFoto(source) {
+    return source.map(function (foto) {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
+        className: "w-96 h-96 rounded-lg",
+        src: foto
+      }, foto);
+    });
+  };
 
   function eventOnSubmit(e) {
     e.preventDefault();
     post(route("post.update", dpost.slug));
   }
 
+  function handleUpload(e) {
+    e.preventDefault();
+    post(route("upload.image", dpost.slug));
+  }
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
     className: "bg-white h-full rounded-lg shadow-lg px-6 py-4",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-      className: "flex justify-between mb-10 border-b border-bg_abu_tua-200",
+      className: "flex justify-between mb-5 border-b border-bg_abu_tua-200",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
         className: "text-2xl font-bold text-bg_biru_tua",
         children: "Detail POST"
@@ -6983,8 +7044,67 @@ function Detail(_ref) {
           }), "BACK TO POST"]
         })
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
+          onSubmit: handleUpload,
+          encType: "multipart/form-data",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+            type: "text",
+            onChange: function onChange() {
+              return setData('id'.e.target.value);
+            },
+            value: data.post_id,
+            hidden: true
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+            type: "text",
+            onChange: function onChange() {
+              return setData('slug'.e.target.value);
+            },
+            value: data.slug,
+            hidden: true
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "flex",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              className: "block",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
+                htmlFor: "formFileMultiple",
+                className: "form-label block mb-2 text-gray-400",
+                children: "Tambah Gambar"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                className: "flex",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                  onChange: handleImage,
+                  type: "file",
+                  className: "block w-full md:w-80 mb-5  px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none",
+                  multiple: true
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                  disabled: processing,
+                  className: "ml-2 block w-full md:w-80 mb-5  px-3 py-1.5 text-base font-normal  bg-bg_abu_tua-100 text-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-out m-0 focus:text-white focus:bg-bg_abu_tua-200 focus:border-blue-600 focus:outline-none ",
+                  children: "Upload"
+                })]
+              })]
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "grid grid-cols-3 gap-x-5 gap-y-3",
+          children: tampilanFoto(selectedImage)
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "grid grid-cols-3 gap-x-5 mb-5 gap-y-3",
+          children: allImages.length > 0 ? allImages.map(function (foto) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
+                className: "w-96 h-96 rounded-lg",
+                src: "/storage/post_image/".concat(foto.url)
+              }, foto.id), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                className: "bg-red-500 flex m-auto mt-2  hover:bg-red-600 text-white rounded-lg px-4 py-2 focus:outline-none",
+                children: "Hapus Foto"
+              })]
+            });
+          }) : "Tidak ada data"
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
         onSubmit: eventOnSubmit,
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "mb-3",
@@ -7042,10 +7162,11 @@ function Detail(_ref) {
             children: errors.title
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+          disabled: processing,
           className: "bg-bg_abu_tua-200 hover:bg-bg_abu_tua-100 text-white focus:outline-none rounded-lg block px-4 py-2 w-full",
           children: "UPDATE NEW POST"
         })]
-      })
+      })]
     })]
   });
 }
@@ -7088,6 +7209,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function Post(props) {
   var posts = props.posts.data;
+  var total = props.total;
 
   function createMark(data) {
     return {
@@ -7115,9 +7237,12 @@ function Post(props) {
     className: "bg-white rounded-lg shadow-lg   px-5   py-5",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
       className: "flex justify-between",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
         className: "font-bold border-b text-sm sm:text-lg border-blue-400 text-gray-500 uppercase",
-        children: "All Data POST"
+        children: ["Data POST : ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
+          className: "text-2xl",
+          children: total
+        }), " Post"]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_0__.Link, {
           href: route("post.create"),
@@ -7250,6 +7375,49 @@ Post.layout = function (page) {
 
 /***/ }),
 
+/***/ "./resources/js/Pages/Post/table.jsx":
+/*!*******************************************!*\
+  !*** ./resources/js/Pages/Post/table.jsx ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ table)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+function table() {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('oke'),
+      _useState2 = _slicedToArray(_useState, 2),
+      table = _useState2[0],
+      setTable = _useState2[1];
+
+  useEffect(function () {
+    console.log('selamat datang');
+  }, []);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+    children: "table"
+  });
+}
+
+/***/ }),
+
 /***/ "./resources/js/Pages/Welcome.js":
 /*!***************************************!*\
   !*** ./resources/js/Pages/Welcome.js ***!
@@ -7264,12 +7432,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia-react */ "./node_modules/@inertiajs/inertia-react/dist/index.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
 
 
 function Welcome(props) {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("hello"),
+      _useState2 = _slicedToArray(_useState, 2),
+      data = _useState2[0],
+      setData = _useState2[1];
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__.Head, {
       title: "Welcome"
@@ -68688,12 +68873,14 @@ var map = {
 	"./Dashboard.js": "./resources/js/Pages/Dashboard.js",
 	"./Post": "./resources/js/Pages/Post/index.js",
 	"./Post/": "./resources/js/Pages/Post/index.js",
-	"./Post/create": "./resources/js/Pages/Post/create.js",
-	"./Post/create.js": "./resources/js/Pages/Post/create.js",
+	"./Post/create": "./resources/js/Pages/Post/create.jsx",
+	"./Post/create.jsx": "./resources/js/Pages/Post/create.jsx",
 	"./Post/detail": "./resources/js/Pages/Post/detail.js",
 	"./Post/detail.js": "./resources/js/Pages/Post/detail.js",
 	"./Post/index": "./resources/js/Pages/Post/index.js",
 	"./Post/index.js": "./resources/js/Pages/Post/index.js",
+	"./Post/table": "./resources/js/Pages/Post/table.jsx",
+	"./Post/table.jsx": "./resources/js/Pages/Post/table.jsx",
 	"./Welcome": "./resources/js/Pages/Welcome.js",
 	"./Welcome.js": "./resources/js/Pages/Welcome.js"
 };

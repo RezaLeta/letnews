@@ -11,7 +11,6 @@ export default function Create() {
         body: "",
         date_post: "",
     });
-
     function sendNewPost(e) {
         e.preventDefault();
         post(route("post.store"));

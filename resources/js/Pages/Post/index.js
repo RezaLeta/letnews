@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 
 export default function Post(props) {
     const posts = props.posts.data;
-
+    const total = props.total;
     function createMark(data) {
         return { __html: data };
     }
@@ -33,7 +33,7 @@ export default function Post(props) {
         <div className="bg-white rounded-lg shadow-lg   px-5   py-5">
             <div className="flex justify-between">
                 <div className="font-bold border-b text-sm sm:text-lg border-blue-400 text-gray-500 uppercase">
-                    All Data POST
+                    Data POST : <span className="text-2xl">{total}</span> Post
                 </div>
 
                 <div>
