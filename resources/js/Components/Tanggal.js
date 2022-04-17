@@ -26,6 +26,6 @@ export default function Tanggal () {
    
      tanggal = namaHari[hari] + ", " + namabulan[bulan] + " " + tanggalSkrng;
   return (
-    <p className='ml-2'>{tanggal}</p>
+    <p className='ml-2 text-sm'>{tanggal}</p>
   )
 }

@@ -5,7 +5,7 @@ export default function NavbarMenu() {
   return (
       <div className="bg-bg_biru_tua w-full h-16 flex justify-start rounded-lg  items-center">
           <div className="px-5 flex">
-              <Link className="text-white font-bold flex text-sm  hover:text-gray-400 uppercase px-2 ">
+              <Link href={route('menu')}  className="text-white font-bold flex text-sm  hover:text-gray-400 uppercase px-2 ">
                   Home
                   <svg
                       xmlns="http://www.w3.org/2000/svg"

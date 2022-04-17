@@ -15,9 +15,10 @@ module.exports = {
                 '110' : '500px'
             },
             colors: {
-                transparent: "transparent",
+   
                 white: "#fff",
                 black: "#2B2937",
+               
                 bg_abu: "#999999",
                 bg_biru_tua: "#1F1D2B",
                 bg_abu_tua: {

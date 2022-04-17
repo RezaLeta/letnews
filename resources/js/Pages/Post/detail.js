@@ -1,8 +1,10 @@
 import Input from "@/Components/Input";
 import Label from "@/Components/Label";
 import App from "@/Layouts/App";
+import { Inertia } from "@inertiajs/inertia";
 import { Link, useForm } from "@inertiajs/inertia-react";
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 
 export default function Detail({ dpost, allImages }) {
 
@@ -50,6 +52,23 @@ export default function Detail({ dpost, allImages }) {
     function handleUpload(e) {
         e.preventDefault();
         post(route("upload.image", dpost.slug));
+    }
+
+    function handleDeleteImage(id)
+    {
+         Swal.fire({
+             title: "Are you sure?",
+             text: "You won't be able to revert this!",
+             icon: "warning",
+             showCancelButton: true,
+             confirmButtonColor: "#3085d6",
+             cancelButtonColor: "#d33",
+             confirmButtonText: "Yes, delete it!",
+         }).then((result) => {
+             if (result.isConfirmed) {
+                 Inertia.delete(route("delete.image", id));
+             }
+         });
     }
 
     return (
@@ -121,7 +140,7 @@ export default function Detail({ dpost, allImages }) {
                                         src={`/storage/post_image/${foto.url}`}
                                         key={foto.id}
                                     />
-                                    <button className="bg-red-500 flex m-auto mt-2  hover:bg-red-600 text-white rounded-lg px-4 py-2 focus:outline-none">Hapus Foto</button>
+                                    <button onClick={() => handleDeleteImage(foto.id)}  className="bg-red-500 flex m-auto mt-2  hover:bg-red-600 text-white rounded-lg px-4 py-2 focus:outline-none">Hapus Foto</button>
                                 </div>
                             );
                         }) : "Tidak ada data"}

@@ -27,7 +27,7 @@ use Inertia\Inertia;
 // });
 
 Route::get('/', [MenuController::class, 'index'])->name('menu');
-Route::get('/{post:slug}', [MenuController::class, 'detail_post'])->name('menu.detail');
+Route::get('/detail-post/{post:slug}', [MenuController::class, 'detail_post'])->name('menu.detail');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -42,10 +42,11 @@ Route::middleware('auth')->group(function () {
     Route::get('post/create', [PostController::class, 'create'])->name('post.create');
     Route::post('post/create', [PostController::class, 'store'])->name('post.store');
     Route::get("/post/{post:slug}/detail_post", [PostController::class, 'detail_post'])->name('post.detail');
-    Route::post('/post/{post:slug}/detail_post', [PostController::class, 'update'])->name('post.update');
+    Route::post('/post/{post:slug}/detail_post/fix', [PostController::class, 'update'])->name('post.update');
     Route::delete('/post/{post:id}', [PostController::class, 'destroy'])->name('post.delete');
 
     Route::post('/post/{post:slug}/detail_post', [PostController::class, 'upload_image'])->name('upload.image');
+    Route::delete('/delete-image/{image:id}', [PostController::class, 'delete_image_post'])->name('delete.image');
 });
 
 require __DIR__ . '/auth.php';

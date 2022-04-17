@@ -11,11 +11,9 @@ class MenuController extends Controller
     public function index()
     {   
  
-        $posts = Post::with('images')->orderBy('date_post', 'asc')->paginate(10);
-        $last_posts = Post::with('images,user')->latest()->first();
+        $last_posts = Post::with('images')->latest()->first();
         return Inertia::render('menu', [
             'last_post' => $last_posts,
-            'posts' => $posts,
             'limit' => Post::with('images')->orderByDesc('id')->offset(1)->limit(4)->get()
         ]);
     }
@@ -25,7 +23,7 @@ class MenuController extends Controller
         $posdetail = Post::with('images','user')->where('slug', $post['slug'])->first();
        return Inertia::render('detail_post', [
            'post' => $posdetail,
-            'limit' => Post::with('images')->orderByDesc('id')->offset(1)->limit(4)->get()
+            'limit' => Post::with('images')->where('slug','!=',$post->slug)->orderByDesc('id')->limit(4)->get()
        ]);
     }
 }

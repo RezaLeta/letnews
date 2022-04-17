@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -111,5 +112,13 @@ class PostController extends Controller
 
 
         // $thumbnailUrl = $thumbnail->storeAs('post_image', "{$id}.{$thumbnail->extension()}");
+    }
+
+    public function delete_image_post(Image $image)
+    {
+       
+        Storage::delete('post_image/'.$image['url']);
+        $image->delete();
+        return redirect()->route('post.page')->with('message', 'Gambar berhasil dihapus');
     }
 }
