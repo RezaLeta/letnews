@@ -2,7 +2,10 @@ import Input from "@/Components/Input";
 import Label from "@/Components/Label";
 import App from "@/Layouts/App";
 import { useForm } from "@inertiajs/inertia-react";
+
 import { Link } from "@inertiajs/inertia-react";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import  ClassicEditor  from "@ckeditor/ckeditor5-build-classic";
 import React, { useState } from "react";
 
 export default function Create() {
@@ -15,6 +18,13 @@ export default function Create() {
         e.preventDefault();
         post(route("post.store"));
     }
+
+    function handleChange(e,editor) {
+        const data = editor.getData();
+        console.log(data);
+        setData('body', data);
+    }
+
 
     return (
         <div className="bg-white h-full rounded-lg shadow-lg px-6 py-4">
@@ -80,7 +90,7 @@ export default function Create() {
                             <p className="text-red-600  ml-1">{errors.title}</p>
                         )}
                     </div>
-                    <div className="mb-3">
+                    {/* <div className="mb-3">
                         <Label
                             value="Deskripsi POST"
                             className=" text-gray-400"
@@ -90,12 +100,28 @@ export default function Create() {
                             onChange={(e) => setData("body", e.target.value)}
                             className={`border-gray-300 w-full focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm `}
                             name="body"
-                            id=""
+                            id="body"
                             rows="5"
                         ></textarea>
                         {errors.title && (
                             <p className="text-red-600 -mt-2 ml-1">
                                 {errors.title}
+                            </p>
+                        )}
+                    </div> */}
+                    <div className="mb-3">
+                        <Label
+                            value="Deskripsi POST"
+                            className=" text-gray-400"
+                        />
+                        <CKEditor
+                            editor={ClassicEditor}
+                            onChange={handleChange}
+                        />
+
+                        {errors.body && (
+                            <p className="text-red-600 mt-2 ml-1">
+                                {errors.body}
                             </p>
                         )}
                     </div>

@@ -2,6 +2,7 @@ import MenuGuest from '@/Layouts/MenuGuest';
 import React from 'react'
 import { Link } from '@inertiajs/inertia-react';
 import Logo from "../../../public/images/logo.png";
+import ReactHTMLParser from 'react-html-parser'
 export default function DetailPost({post,limit}) {
 
   return (
@@ -38,10 +39,12 @@ export default function DetailPost({post,limit}) {
                       /> */}
                   </div>
                   <div className="mt-5">
-                      <p className="text-justify">{post.body}</p>
+                      <div>
+                            {ReactHTMLParser(post.body)}
+                      </div>
                   </div>
               </div>
-              <div className="md:w-1/3 mt-5 md:mt-32 md:px-5">
+              <div className="md:w-1/3 mt-5 border-b  md:mt-24 md:px-5">
                   <p className="font-bold text-2xl mb-5">Berita Lainnya</p>
                   {limit.map((post) => {
                       return (

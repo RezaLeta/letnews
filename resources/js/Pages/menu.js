@@ -8,7 +8,7 @@ export default function Menu({ posts, last_post, limit }) {
     return (
         <div className="pb-2">
             <div className="bg-white mt-5 px-2 py-5">
-                <div className="bg-white w-full px-6 py-4 block  md:grid md:grid-cols-2 md:gap-5">
+                <div className="bg-white w-full px-6 py-4 block  md:grid md:grid-cols-2 gap-y-2  md:gap-5">
                     <div className="relative z-20   text-lg font-bold ">
                         <Link href={route("menu.detail", last_post.slug)}>
                             {last_post.images == "" ? (
@@ -28,7 +28,7 @@ export default function Menu({ posts, last_post, limit }) {
                                 />
                             )}
                         </Link>
-                        <div className="font-bold  bg-purple-300 px-10  text-white  absolute bottom-5 left-0">
+                        <div className="font-bold md:mt-0   bg-purple-300 px-10  text-white  absolute bottom-5 left-0">
                             <p
                                 style={{ backgroundColor: "" }}
                                 className="text-2xl"
