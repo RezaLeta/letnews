@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::get("/post/{post:slug}/detail_post", [PostController::class, 'detail_post'])->name('post.detail');
     Route::post('/post/{post:slug}/detail_post/fix', [PostController::class, 'update'])->name('post.update');
     Route::delete('/post/{post:id}', [PostController::class, 'destroy'])->name('post.delete');
+ 
 
     Route::post('/post/{post:slug}/detail_post', [PostController::class, 'upload_image'])->name('upload.image');
     Route::delete('/delete-image/{image:id}', [PostController::class, 'delete_image_post'])->name('delete.image');

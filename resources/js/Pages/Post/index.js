@@ -1,17 +1,43 @@
 import { Head, Link } from "@inertiajs/inertia-react";
 import React, { useState, useEffect } from "react";
 import Authenticated from "@/Layouts/Authenticated";
-
+import ReactHtmlParser from 'react-html-parser'
 import { Inertia } from "@inertiajs/inertia";
 import App from "@/Layouts/App";
+
 import Swal from "sweetalert2";
+import Input from "@/Components/Input";
 
 export default function Post(props) {
     const posts = props.posts.data;
     const total = props.total;
+
+ 
+
+    const [query, setQuery] = useState('');
+ 
     function createMark(data) {
         return { __html: data };
     }
+
+
+    function handleChangeQuery(e) {
+        setQuery(e.target.value)
+        Inertia.get(
+            route(route().current()),
+            { search: e.target.value },
+            {
+                preserveState: true,
+                replace: true,
+                preserveScroll: true
+            }
+        );
+    }
+
+    useEffect(() => {
+       
+   
+    }, [query]);
 
     const handleDeletePost = (id) => {
         Swal.fire({
@@ -61,7 +87,30 @@ export default function Post(props) {
                 </div>
             </div>
             <div className="overflow-x-auto  lg:w-full" id="table">
-                <table className="w-full bg-white divide-y divide-gray-200  rounded-lg overflow-hidden my-5">
+                <div className="flex items-center mt-4  justify-end">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        />
+                    </svg>
+                    <input
+                        type="search"
+                        autoComplete="search"
+                        name="search"
+                        value={query}
+                        onChange={(e) => handleChangeQuery(e)}
+                    />
+                </div>
+                <table className="w-full bg-white divide-y divide-gray-200  rounded-lg overflow-hidden my-2">
                     <thead className=" bg-bg_abu_tua-200  font-bold">
                         <tr className=" text-white ">
                             <th className="w-32  text-center font-semibold  text-sm uppercase  px-6 py-5 ">
@@ -100,11 +149,13 @@ export default function Post(props) {
                                           </td>
                                           <td className="px-6 py-2">
                                               {post.body.length > 30
-                                                  ? `${post.body.substring(
-                                                        0,
-                                                        35
+                                                  ? `${ReactHtmlParser(
+                                                        post.body.substring(
+                                                            0,
+                                                            35
+                                                        )
                                                     )}...`
-                                                  : post.body}
+                                                  : ReactHtmlParser(post.body)}
                                           </td>
                                           <td className="px-6 py-2">
                                               {post.date_post}

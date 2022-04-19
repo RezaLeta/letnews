@@ -13,12 +13,16 @@ use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
+        // dd($search);
         $posts = Post::query();
-
+        if ($request->input('search')) {
+            $posts->with('user')->where('title', 'LIKE', '%' . $request->input('search') . '%');
+        }
         return inertia('Post/index', [
-            'posts' => $posts->with('user')->latest()->paginate(5),
+            'posts' => $posts->with('user')->orderByDesc('created_at')->paginate(5)->withQueryString(),
             'total' =>  $posts->count()
         ]);
     }
@@ -116,8 +120,8 @@ class PostController extends Controller
 
     public function delete_image_post(Image $image)
     {
-       
-        Storage::delete('post_image/'.$image['url']);
+
+        Storage::delete('post_image/' . $image['url']);
         $image->delete();
         return redirect()->route('post.page')->with('message', 'Gambar berhasil dihapus');
     }
